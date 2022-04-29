@@ -6,9 +6,17 @@ import logo from '../../assets/images/logo.svg';
 import { Container, Cart } from './styles';
 import { useCart } from '../../hooks/useCart';
 
+interface CartSizeProps{
+  id?: number;
+}
+
 const Header = (): JSX.Element => {
-  // const { cart } = useCart();
-  // const cartSize = // TODO;
+    const { cart } = useCart();
+    const cartSize = cart.reduce((acc, cart) => {
+        if(acc.findIndex(x=>x.id === cart.id) < 0)
+            acc.push({id: cart.id})
+        return acc;
+    },[] as CartSizeProps[]).length;
 
   return (
     <Container>
@@ -20,7 +28,7 @@ const Header = (): JSX.Element => {
         <div>
           <strong>Meu carrinho</strong>
           <span data-testid="cart-size">
-            {/* {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`} */}
+            {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
           </span>
         </div>
         <MdShoppingBasket size={36} color="#FFF" />
